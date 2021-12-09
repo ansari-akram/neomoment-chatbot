@@ -11,18 +11,21 @@ import { FormsModule } from '@angular/forms';
 
 import { ChatService } from './chat.service';
 import { VoicerecognitionService } from './voicerecognition.service';
+import { KernelComponent } from './kernel/kernel.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatEngComponent,
-    SpeechToTextComponent
+    SpeechToTextComponent,
+    KernelComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [ChatService, VoicerecognitionService],
   bootstrap: [AppComponent]
