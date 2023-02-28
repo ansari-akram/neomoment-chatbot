@@ -3,6 +3,7 @@ function myTest(text, voiceOf) {
     console.log('Getting voice output!')
 }
 
+<<<<<<< HEAD
 
 function getLocalStream() {
     var checkM;
@@ -75,3 +76,18 @@ function getMicStatus () {
 
 
 // granted, denied, prompt
+=======
+function getLocalStream() {
+    navigator.mediaDevices.getUserMedia({video: false, audio: true}).then( stream => {
+        window.localAudio.autoplay = false;
+    }).catch( err => {
+        if(err === PERMISSION_DENIED) {
+            // Explain why you need permission and how to update the permission setting
+            console.log("u got an error:" + err)
+            }
+    });
+}
+
+
+getLocalStream();
+>>>>>>> 40feb7871bbcb5ac1efd9665beb7c67e621e8dd4
