@@ -4,17 +4,17 @@ import { Observable } from 'rxjs';
 import { scan } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-chat-eng',
-  templateUrl: './chat-eng.component.html',
-  styleUrls: ['./chat-eng.component.css']
+  selector: 'app-kernel',
+  templateUrl: './kernel.component.html',
+  styleUrls: ['./kernel.component.css']
 })
-export class ChatEngComponent implements OnInit, AfterViewChecked {
-    @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
+export class KernelComponent implements OnInit, AfterViewChecked {
+  @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
 
-    messages?: Observable<Message[]>;
-    formValue!: string;
-    sessionVal!: string;
-    countVal = 0;
+  messages?: Observable<Message[]>;
+  formValue!: string;
+  sessionVal!: string;
+  countVal = 0;
 
   constructor(public chat: ChatService) { }
 
@@ -31,7 +31,7 @@ export class ChatEngComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked() {        
     this.scrollToBottom();        
   } 
-  
+
   scrollToBottom(): void {
     try {
         this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
@@ -66,5 +66,4 @@ export class ChatEngComponent implements OnInit, AfterViewChecked {
     this.chat.converse(cht, false, "null");
     this.formValue = "";
   }
-
 }

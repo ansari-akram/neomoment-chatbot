@@ -3,7 +3,10 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 // import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
-import { delay } from 'rxjs/operators'
+import { delay } from 'rxjs/operators';
+
+import * as _ from 'lodash';
+import { Router } from '@angular/router';
 
 declare const myTest: any;
 
@@ -20,24 +23,53 @@ export class ChatService {
   
   // user!: string;
   // umsg!: string;
-  // readonly WDUrl = "https://eu-gb.functions.appdomain.cloud/api/v1/web/sohailkst10%40gmail.com_dev/default/Doctor_apt_v6.json";
-  readonly WDUrl = "https://eu-gb.functions.appdomain.cloud/api/v1/web/sohailkst10%40gmail.com_dev/default/Translator_both.json";
+  // WDUrl = "https://eu-gb.functions.appdomain.cloud/api/v1/web/sohailkst10%40gmail.com_dev/default/Doctor_apt_v6.json";
+  WDUrl = "https://eu-gb.functions.appdomain.cloud/api/v1/web/sohailkst10%40gmail.com_dev/default/Translator_both.json";
 
 
-  conversation = new BehaviorSubject<Message[]>([]);
+  conversation? = new BehaviorSubject<Message[]>([]);
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router: Router) { }
 
   // talk(val: any) {
       // return this.http.post(this.WDUrl, val);
     // }
+
+  getDropDownText(id: any, object: any) {
+    const selObj = _.filter(object, function (o) {
+        return (_.includes(id,o.id));
+    });
+    return selObj;
+  }
+
+  changeUrl(url: any) {
+
+    delete this.conversation;
+    this.conversation = new BehaviorSubject<Message[]>([]);
+    this.WDUrl = url;
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    // this.router.navigate([currentUrl]);
+    this.router.navigate([currentUrl]);
+  }
+
+  getSelectedUrl(num: any) {
+    if (num == 1) {
+      this.changeUrl("https://eu-gb.functions.appdomain.cloud/api/v1/web/sohailkst10%40gmail.com_dev/default/Translator_both.json");
+    } else if (num == 2) {
+      this.changeUrl("https://eu-gb.functions.appdomain.cloud/api/v1/web/sohailkst10%40gmail.com_dev/default/Doctor_apt_v6.json");
+    }
+  }
+
+
   sendMessage(val: any){
     return this.http.post(this.WDUrl, val);
   }
 
   // Adds message to the source
   update(msg: Message) {
-    this.conversation.next([msg]);
+    this.conversation?.next([msg]);
   }
 
   // Sends and receives messages

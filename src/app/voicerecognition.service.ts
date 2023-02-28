@@ -26,9 +26,9 @@ export class VoicerecognitionService {
   init() {
 
     this.recognition.interimResults = true;
-    this.recognition.lang = 'en-US';
+    // this.recognition.lang = 'en-US';
     // this.recognition.lang = 'ar-AE';
-    // this.recognition.lang = 'fr-FR';
+    this.recognition.lang = 'fr-FR';
     // this.recognition.lang = 'hi-HI';
 
     this.recognition.addEventListener('result', (e: any) => {
@@ -42,6 +42,7 @@ export class VoicerecognitionService {
   }
 
   start() {
+
     this.isStoppedSpeechRecog = false;
     this.recognition.start();
     console.log("Speech recognition started")
@@ -72,6 +73,19 @@ export class VoicerecognitionService {
       this.countVal++;
     };
 
+    if (this.recognition.lang == 'en-US') {
+      this.voiceOf = "US English Female";
+      console.log('EnglishEnglishEnglishEnglish');
+    };
+    if (this.recognition.lang == 'ar-AE') {
+      this.voiceOf = "Arabic Female";
+      console.log('ArabicArabicArabicArabic');
+    };
+    if (this.recognition.lang == 'fr-FR') {
+      this.voiceOf = "French Female";
+      console.log('frenchfrenchfrench');
+    };
+
     // this.sessionVal = "";
     var cht = {text: this.text,
               session_val: this.sessionVal};
@@ -85,15 +99,6 @@ export class VoicerecognitionService {
       
       }); 
     } 
-
-    if (this.recognition.lang == 'en-US') {
-      this.voiceOf = "US English Female";
-      console.log('EnglishEnglishEnglishEnglish');
-    };
-    if (this.recognition.lang == 'ar-AE') {
-      this.voiceOf = "Arabic Female";
-      console.log('ArabicArabicArabicArabic');
-    };
 
 
     this.chat.converse(cht, true, this.voiceOf);
